@@ -1,0 +1,17 @@
+{
+  "name": "my-app",
+  "version": "1.0",
+  "private": true,
+  "dependencies": {
+    "ejs": "latest",
+    "aws-sdk": "latest",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "body-parser": "latest",
+    "mysql": "^2.18.1"
+
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}
