@@ -27,10 +27,10 @@ app.get('/api/getCountries', function(req, res) {
 });
 
 
-app.get('/api/getCapitalCity/:countryName', function(req, res) {
-    const countryName = req.params.countryName;
-    const query = `SELECT capital_city FROM countries where country_name=?`;
-    database.query(query,[countryName], (err, results) => {
+app.get('/api/getCapitalCity/:id', function(req, res) {
+    const id = req.params.id;
+    const query = `SELECT capital_city FROM countries where id=?`;
+    database.query(query,[id], (err, results) => {
         if(err) {
             console.error(err)
             res.status(500).json({ error: 'Error executing query to get capital city'});
@@ -48,7 +48,6 @@ app.get('/api/getCapitalCity/:countryName', function(req, res) {
 
 app.post('/api/addCountryDetails', function(req, res) {
     const countryData = req.body;
-    console.log(countryData.capital);
     const query = `INSERT INTO Countries (country_name, capital_city) VALUES (?,?)`;
     const values = [countryData.country_name, countryData.capital];
 
@@ -81,15 +80,16 @@ app.put('/api/updateCountry', function(req, res){
     })
 })
 
-app.delete('/api/deleteCountryData/:countryName', function(req, res) {
-    const countryName = req.params.countryName;
-    const query = `DELETE FROM countries where country_name=?`;
-    database.query(query, [countryName], (err, results) => {
+app.delete('/api/deleteCountryData/:id', function(req, res) {
+    const countryId = req.params.id;
+    const query = `DELETE FROM countries where id=?`;
+    database.query(query, [countryId], (err, results) => {
 
         if(err){
             console.log(err);
             res.status(500).json({error: 'Error executing query to delete'});
         } else{
+            console.log("delted country with id: "+  countryId)
             res.status(204).json();
         }
 
