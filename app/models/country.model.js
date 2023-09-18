@@ -19,8 +19,11 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: false
         }
+    }, {
+        timestamps: false
     });
-    
+
+
     const City = sequelize.define('Cities', {
     
         id: {
@@ -38,14 +41,19 @@ module.exports = (sequelize, Sequelize) => {
             }
         },
     
-        city_name: {
+        name: {
             type:Sequelize.STRING,
             allowNull: false
         }
+    }, {
+        timestamps: false
     });
-    
+
+    Country.hasMany(City, { onDelete: 'CASCADE' });
     City.belongsTo(Country, { foreignKey: 'country_id' });
-    Country.hasMany(City);
+    City.belongsTo(Country, { onDelete: 'CASCADE'})
+    
+
 
     return {
         Country, 

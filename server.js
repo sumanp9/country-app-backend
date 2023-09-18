@@ -3,21 +3,17 @@ var app = express();
 var cors = require('cors');
 
 
-var database = require('./connection.js');
+//var database = require('./connection.js');
 
 var corsOptions = {
-    origin: "http://localhost:8081"
+    origin: "http://localhost:4200"
 };
 
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-const route = require('./app/routes/routes.js');
-app.use('/api', route);
-
-
-const db = require("./app/models");
+const db = require("./app/models/index.js");
 
 
 db.sequelize.sync()
@@ -33,6 +29,16 @@ app.get("/", (req, res) => {
 })
 
 
+
+require("./app/routes/routes.js")(app);
+const  PORT =  process.env.PORT || 8080;
+
+app.listen(PORT, ()=> {
+    console.log(`Server is running on port ${PORT}`);
+})
+
+
+/*
 app.get('/api/countries', function(req, res) {
     const query = `SELECT id, country_name FROM countries`;
 
@@ -181,19 +187,14 @@ app.delete('/api/city/:cityId', function(req, res) {
     })
 })
 
-/*
+
 var server = app.listen(8081, function() {
     var host = server.address().address;
     var port = server.address().port;
     console.log("listening at port", port);
-})*/
-
-
-const  PORT =  process.env.PORT || 8080;
-
-app.listen(PORT, ()=> {
-    console.log(`Server is running on port ${PORT}`);
 })
+
+*/
 
 /*require("./app/routes/routes.js")(app);
 const PORT = ...;
