@@ -3,15 +3,6 @@
   "version": "1.0",
   "private": true,
   "dependencies": {
-<<<<<<< HEAD
-    "ejs": "latest",
-    "aws-sdk": "latest",
-    "cors": "^2.8.5",
-    "express": "^4.18.2",
-    "body-parser": "latest",
-    "mysql": "^2.18.1"
-
-=======
     "aws-sdk": "latest",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
@@ -19,8 +10,9 @@
     "express": "^4.18.2",
     "mysql": "^2.18.1",
     "mysql2": "^3.6.1",
+    "pg": "^8.11.3",
+    "pg-hstore": "^2.3.4",
     "sequelize": "^6.33.0"
->>>>>>> phase-3-MVC
   },
   "scripts": {
     "start": "node server.js"

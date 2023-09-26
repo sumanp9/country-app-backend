@@ -9,9 +9,9 @@ module.exports = app => {
 
     router.get("/capital", countries.findCapital);
 
-    router.post("/country", countries.createCountry);
+    router.post("/country", countries.createcountry);
 
-    router.post("/city", countries.createCity);
+    router.post("/city", countries.createcity);
 
     router.put("/city", countries.updateCity);
 

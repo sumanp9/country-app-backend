@@ -3,7 +3,7 @@ const { sequelize } = require('.');
 
 module.exports = (sequelize, Sequelize) => {
 
-    const Country = sequelize.define('Countries',  {
+    const country = sequelize.define('countries',  {
         id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
@@ -24,7 +24,7 @@ module.exports = (sequelize, Sequelize) => {
     });
 
 
-    const City = sequelize.define('Cities', {
+    const city = sequelize.define('cities', {
     
         id: {
             type: Sequelize.INTEGER,
@@ -36,7 +36,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false,
             references: {
-                model:Country,
+                model:country,
                 key:'id',
             }
         },
@@ -49,14 +49,14 @@ module.exports = (sequelize, Sequelize) => {
         timestamps: false
     });
 
-    Country.hasMany(City, { onDelete: 'CASCADE' });
-    City.belongsTo(Country, { foreignKey: 'country_id' });
-    City.belongsTo(Country, { onDelete: 'CASCADE'})
+    country.hasMany(city, { onDelete: 'CASCADE' });
+    city.belongsTo(country, { foreignKey: 'country_id' });
+    city.belongsTo(country, { onDelete: 'CASCADE'})
     
 
 
     return {
-        Country, 
-        City
+        country, 
+        city
     };
 }

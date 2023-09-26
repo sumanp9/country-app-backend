@@ -3,10 +3,8 @@ const db = require("../models/index");
 const CountryDB = db.country;
 
 exports.findAll = (req, res) => {
-
-    console.log("findAll");
-
-    CountryDB.Country.findAll()
+    
+    CountryDB.country.findAll()
     .then((countries) => {
         res.send(countries);
     })
@@ -14,14 +12,13 @@ exports.findAll = (req, res) => {
         console.error(err);
         res.status(500).json({message: "internal server error"});
     });
-
 };
 
 exports.findAllCities = (req, res) => {
     const  countryId = req.query.id;
 
 
-    CountryDB.City.findAll({
+    CountryDB.city.findAll({
         where: {
             country_id: countryId,
         },
@@ -41,7 +38,7 @@ exports.findAllCities = (req, res) => {
 exports.findCapital = (req, res) => {
     const countryId = req.query.id;
 
-    CountryDB.Country.findOne({
+    CountryDB.country.findOne({
         where: {
             id: countryId
         },
@@ -58,7 +55,7 @@ exports.findCapital = (req, res) => {
     })
 }
 
-exports.createCountry = (req, res) => {
+exports.createcountry = (req, res) => {
     if (!req.body.country_name) {
         res.status(400).send({
           message: "Content can not be empty!"
@@ -71,22 +68,22 @@ exports.createCountry = (req, res) => {
         capital_city: req.body.capital
       };
 
-      CountryDB.Country.create(countryData)
+      CountryDB.country.create(countryData)
       .then(data => {
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
             message:
-              err.message || "Some error occurred while creating Country."
+              err.message || "Some error occurred while creating country."
           });
       })
 
 }
 
-exports.createCity = (req, res) => {
+exports.createcity = (req, res) => {
 
-    console.log("createCity method")
+    console.log("createcity method")
 
 
     if(!req.body.name || !req.body.country_id) {
@@ -103,15 +100,14 @@ exports.createCity = (req, res) => {
 
     console.log(cityData);
 
-    CountryDB.City.create(cityData)
+    CountryDB.city.create(cityData)
     .then(data => {
-        console.log(data);
         res.send(data);
     })
     .catch(err => {
         res.status(500).send({
             message:
-              err.message || "Some error occurred while creating City."
+              err.message || "Some error occurred while creating city."
           });
       })
 
@@ -124,20 +120,20 @@ exports.deleteCountry = async (req, res) => {
       return res.status(400).json({ message: "Id cannot be empty!" });
     }
 
-    const cityDeletionResult = await CountryDB.City.destroy({
+    const cityDeletionResult = await CountryDB.city.destroy({
       where: { country_id: id },
       truncate: false
     });
 
-    const countryDeletionResult = await CountryDB.Country.destroy({
+    const countryDeletionResult = await CountryDB.country.destroy({
       where: { id: id },
       truncate: false
     });
 
     if (countryDeletionResult === 1) {
-      res.json({ message: `Country with ID ${id} and associated cities were deleted successfully.` });
+      res.json({ message: `country with ID ${id} and associated cities were deleted successfully.` });
     } else {
-      res.status(404).json({ message: `Country with ID ${id} not found or no associated cities to delete.` });
+      res.status(404).json({ message: `country with ID ${id} not found or no associated cities to delete.` });
     }
   } catch (error) {
     console.error(error);
@@ -155,23 +151,23 @@ exports.deleteCity = (req, res) => {
     return;
    }
 
-   CountryDB.City.destroy({
+   CountryDB.city.destroy({
     where: {id: id},
    })
     .then(result => {
         if (result == 1) {
             res.send({
-              message: "City was deleted successfully!"
+              message: "city was deleted successfully!"
             });
           } else {
             res.send({
-              message: `Cannot delete City with id=${id}. Maybe Tutorial was not found!`
+              message: `Cannot delete city with id=${id}. Maybe Tutorial was not found!`
             });
           }
         })
         .catch(err => {
           res.status(500).send({
-            message: "Could not delete City with id=" + id
+            message: "Could not delete city with id=" + id
           });
         });
 
@@ -183,25 +179,25 @@ exports.updateCity = (req, res) => {
     console.log("updateCity method")
     const {id, name} = req.body;
     
-    CountryDB.City.update(
+    CountryDB.city.update(
         {name},
         {where: {id}}
         )    
         .then(num => {
             if(num == 1) {
                 res.send({
-                    message: "City updated successfully."
+                    message: "city updated successfully."
                 });
             } else {
                 res.send({
-                    message: `Cannot update City with id ${id}.`
+                    message: `Cannot update city with id ${id}.`
                 });
             }
         })
 
         .catch(err => {
             res.status(500).send({
-                message: "Error updating City with id="+ id
+                message: "Error updating city with id="+ id
             });
         });
   
@@ -212,32 +208,32 @@ exports.updateCountry = (req, res) => {
     const {id, country_name} = req.body;
 
     
-    CountryDB.Country.update(
+    CountryDB.country.update(
         {country_name},
         {where: {id}}
     )
         .then(num => {
             if(num == 1) {
                 res.send({
-                    message: "Country updated successfully."
+                    message: "country updated successfully."
                 });
             } else {
                 res.send({
-                    message: `Cannot update Country with id ${id}.`
+                    message: `Cannot update country with id ${id}.`
                 });
             }
         })
 
         .catch(err => {
             res.status(500).send({
-                message: "Error updating Country with id="+ id
+                message: "Error updating country with id="+ id
             });
         });
 };
 
 exports.updateCapital = (req, res) => {
     const {id, capital_city} = req.body;
-    CountryDB.Country.update(
+    CountryDB.country.update(
         {capital_city},
         {where: {id}}
     ).
@@ -248,13 +244,13 @@ exports.updateCapital = (req, res) => {
                 });
             } else {
                 res.send({
-                    message: `Cannot update Capital with Country id ${id}.`
+                    message: `Cannot update Capital with country id ${id}.`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error updating Capital of a Country with id= "+ id
+                message: "Error updating Capital of a country with id= "+ id
             });
         });
 };
